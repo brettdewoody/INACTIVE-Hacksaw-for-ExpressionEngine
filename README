@@ -48,9 +48,9 @@ you would do this:
    {your_content}
 {/exp:eehive_hacksaw}
 
-This parameter can be coupled with the 'words' parameter
-in case you forget to put the cutoff string in some of 
-your entries. This way, the excerpt will be truncated at
+The 'cutoff' parameter can be coupled with the 'words' parameter
+in case you forget to add the cutoff string to some of 
+your entries. This way the excerpt will be truncated at
 the cutoff string, OR after X words.
 
 You can add any string at the end of the excerpt using the
