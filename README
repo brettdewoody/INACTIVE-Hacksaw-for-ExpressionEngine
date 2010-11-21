@@ -19,7 +19,7 @@ append  = ""     // String to append to the end of the excerpt
 allow   = ""     // HTML tags you want to allow. Ex allow="<b><a>"
 
 For example, if you want to limit your excerpt to 100
-characters you would do this:
+words you would do this:
 
 {exp:eehive_hacksaw words="100"}
    {your_content}
