@@ -73,7 +73,7 @@ var $return_data = "";
 	if ($num_words > $limit) {
 	  $words = str_word_count($content, 2);
       $pos = array_keys($words);
-      $content = substr($content, 0, $pos[$limit]) . $append;
+      $content = substr($content, 0, ($pos[$limit]-1)) . $append;
     }
     return $content;
     }
