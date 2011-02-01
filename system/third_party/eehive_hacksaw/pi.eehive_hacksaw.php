@@ -90,7 +90,7 @@ var $return_data = "";
 	if ($pos != FALSE) {
 		$content = substr($content, 0, $pos);
 	} elseif ($words != "") {
-		$content = $this->_truncate_words(strip_tags($content, $allow), $words);
+		$content = $this->_truncate_words(strip_tags($content, $allow), $words, '');
 	}
     return $content;
   }
