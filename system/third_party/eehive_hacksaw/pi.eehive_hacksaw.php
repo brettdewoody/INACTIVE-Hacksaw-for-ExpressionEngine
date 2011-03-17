@@ -60,7 +60,11 @@ var $return_data = "";
 		// Strip the HTML
 		$stripped_content = strip_tags($tag_content, $allow);
 		$new_content = $this->_truncate_words($stripped_content, $words, $append);
-	} 
+	} else {
+                // Strip the HTML
+		$stripped_content = strip_tags($tag_content, $allow);
+                $new_content = $stripped_content;
+        }
 	
 	// Return the new content
     $this->return_data = $new_content;
@@ -126,7 +130,9 @@ cutoff marker.
     allow = "" // HTML tags you want to allow. Ex allow="<b><a>"
 }{your_content}{/exp:eehive_hacksaw}
 
-
+You can also leave off any truncating parameters (chars, 
+words, cutoff) and Hacksaw will strip the HTML and 
+return the entire contents of the tag.
 
   <?php
   $buffer = ob_get_contents();
