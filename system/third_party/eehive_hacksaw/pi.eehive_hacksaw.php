@@ -6,7 +6,7 @@ $plugin_info = array(
   'pi_name' => 'EE Hive Hacksaw',
   'pi_version' => '1.05',
   'pi_author' => 'EE Hive - Brett DeWoody',
-  'pi_author_url' => 'http://www.ee-hive.com/hacksaw',
+  'pi_author_url' => 'http://www.ee-hive.com/add-ons/hacksaw',
   'pi_description' => 'Allows you to create excerpts of your entries by removing HTML tags and limited the excerpt by character count, word count or a specific marker you insert into your content.',
   'pi_usage' => Eehive_hacksaw::usage()
   );
@@ -18,7 +18,7 @@ $plugin_info = array(
  * @category		Plugin
  * @author			Brett DeWoody - ee hive
  * @copyright		Copyright (c) 2010, Brett DeWoody
- * @link			http://www.ee-hive.com/hacksaw
+ * @link			http://www.ee-hive.com/add-ons/hacksaw
  */
 
 class Eehive_hacksaw
