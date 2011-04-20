@@ -4,7 +4,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 $plugin_info = array(
   'pi_name' => 'EE Hive Hacksaw',
-  'pi_version' => '1.04',
+  'pi_version' => '1.05',
   'pi_author' => 'EE Hive - Brett DeWoody',
   'pi_author_url' => 'http://www.ee-hive.com/hacksaw',
   'pi_description' => 'Allows you to create excerpts of your entries by removing HTML tags and limited the excerpt by character count, word count or a specific marker you insert into your content.',
@@ -84,7 +84,7 @@ var $return_data = "";
 	
   // Helper Function - Truncate by Character Limit
   function _truncate_chars($content, $limit, $append) {
-    $content = substr($content,0,$limit) . $append;  
+    $content = $this->EE->functions->char_limiter($content, $limit) . $append; 
     return $content;
   }
   
