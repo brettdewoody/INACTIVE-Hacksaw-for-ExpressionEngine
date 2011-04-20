@@ -84,6 +84,7 @@ var $return_data = "";
 	
   // Helper Function - Truncate by Character Limit
   function _truncate_chars($content, $limit, $append) {
+    $content = preg_replace('/\s+?(\S+)?$/', '', substr($content, 0, ($limit+1)));
     $content = $this->EE->functions->char_limiter($content, $limit) . $append; 
     return $content;
   }
