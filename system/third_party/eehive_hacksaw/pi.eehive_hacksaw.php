@@ -4,7 +4,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 $plugin_info = array(
   'pi_name' => 'EE Hive Hacksaw',
-  'pi_version' => '1.05',
+  'pi_version' => '1.06',
   'pi_author' => 'EE Hive - Brett DeWoody',
   'pi_author_url' => 'http://www.ee-hive.com/add-ons/hacksaw',
   'pi_description' => 'Allows you to create excerpts of your entries by removing HTML tags and limited the excerpt by character count, word count or a specific marker you insert into your content.',
@@ -51,7 +51,7 @@ var $return_data = "";
 	if(isset($cutoff) && $cutoff != "") {
 		$cutoff_content = $this->_truncate_cutoff($tag_content, $cutoff, $words, $allow, $append);
 		// Strip the HTML
-		$new_content = (strpos($tag_content, $cutoff) ? strip_tags($cutoff_content, $allow) . $append : strip_tags($cutoff_content, $allow));
+		$new_content = (strpos($tag_content, $cutoff) ? strip_tags($cutoff_content, $allow) : strip_tags($cutoff_content, $allow));
 	} elseif (isset($chars) && $chars != "") {
 		// Strip the HTML
 		$stripped_content = strip_tags($tag_content, $allow);
@@ -96,7 +96,7 @@ var $return_data = "";
 	if ($pos != FALSE) {
 		$content = substr($content, 0, $pos);
 	} elseif ($words != "") {
-		$content = $this->_truncate_words(strip_tags($content, $allow), $words, '');
+		$content = $this->_truncate_words(strip_tags($content, $allow), $words, '') . $append;
 	}
     return $content;
   }
