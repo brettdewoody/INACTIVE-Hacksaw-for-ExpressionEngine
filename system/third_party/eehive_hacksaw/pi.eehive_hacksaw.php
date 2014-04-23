@@ -4,7 +4,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 $plugin_info = array(
   'pi_name' => 'EE Hive Hacksaw',
-  'pi_version' => '1.07',
+  'pi_version' => '1.08',
   'pi_author' => 'EE Hive - Brett DeWoody',
   'pi_author_url' => 'http://www.ee-hive.com/add-ons/hacksaw',
   'pi_description' => 'Allows you to create excerpts of your entries by removing HTML tags and limited the excerpt by character count, word count or a specific marker you insert into your content.',
@@ -74,19 +74,18 @@ var $return_data = "";
   
   // Helper Function - Truncate by Word Limit
   function _truncate_words($content, $limit, $append) {
-    $num_words = str_word_count($content, 0);
-	if ($num_words > $limit) {
-	  $words = str_word_count($content, 2);
-      $pos = array_keys($words);
-      $content = substr($content, 0, ($pos[$limit]-1)) . $append;
+    $words = explode(" ",$content);
+    if (count($words) > $limit) {
+      return implode(" ",array_splice($words,0,$limit)) . $append;
+    } else {
+      return $content;
     }
-    return $content;
-    }
+  }
 	
   // Helper Function - Truncate by Character Limit
   function _truncate_chars($content, $chars_start, $limit, $append) {
     // Removing the below to see how it effect UTF-8. 
-    $content = preg_replace('/\s+?(\S+)?$/', '', substr($content, $chars_start, ($limit+1))) . $append;
+    $content = preg_replace('/\s+?(\S+)?$/', '', mb_substr($content, $chars_start, ($limit+1))) . $append;
     return $content;
   }
   
