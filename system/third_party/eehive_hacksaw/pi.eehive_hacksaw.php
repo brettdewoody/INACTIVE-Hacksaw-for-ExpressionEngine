@@ -67,6 +67,8 @@ var $return_data = "";
                 $new_content = $stripped_content;
         }
 	
+	$new_content = $this->_restoreTags($new_content);
+	
 	// Return the new content
     $this->return_data = $new_content;
     
@@ -100,6 +102,25 @@ var $return_data = "";
 	}
     return $content;
   }
+  
+  // Original PHP code by Chirp Internet: www.chirp.com.au
+  // Please acknowledge use of this code by including this header.
+  function _restoreTags($input)
+  {
+    $opened = array();
+
+    // loop through opened and closed tags in order
+    if(preg_match_all("/<(\/?[a-z]+)>?/i", $input, $matches)) {
+      foreach($matches[1] as $tag) {
+        if(preg_match("/^[a-z]+$/i", $tag, $regs)) {
+          // a tag has been opened
+          if(strtolower($regs[0]) != 'br') $opened[] = $regs[0];
+        } elseif(preg_match("/^\/([a-z]+)$/i", $tag, $regs)) {
+          // a tag has been closed
+          unset($opened[array_pop(array_keys($opened, $regs[1]))]);
+        }
+      }
+    }
   
 
 	// --------------------------------------------------------------------
