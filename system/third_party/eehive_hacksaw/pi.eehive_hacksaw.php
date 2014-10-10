@@ -4,7 +4,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 $plugin_info = array(
   'pi_name' => 'EE Hive Hacksaw',
-  'pi_version' => '1.07',
+  'pi_version' => '1.0.8',
   'pi_author' => 'EE Hive - Brett DeWoody',
   'pi_author_url' => 'http://www.ee-hive.com/add-ons/hacksaw',
   'pi_description' => 'Allows you to create excerpts of your entries by removing HTML tags and limited the excerpt by character count, word count or a specific marker you insert into your content.',
@@ -45,6 +45,7 @@ var $return_data = "";
 	$chars = $this->EE->TMPL->fetch_param('chars');
 	$chars_start = ($this->EE->TMPL->fetch_param('chars_start') ? $this->EE->TMPL->fetch_param('chars_start') : 0);
 	$words = $this->EE->TMPL->fetch_param('words');
+	$break_word = $this->EE->TMPL->fetch_param('break_word', 'yes');
 	$cutoff = $this->EE->TMPL->fetch_param('cutoff');
 	$append = $this->EE->TMPL->fetch_param('append', '');
 	$allow = $this->EE->TMPL->fetch_param('allow');
@@ -56,7 +57,7 @@ var $return_data = "";
 	} elseif (isset($chars) && $chars != "") {
 		// Strip the HTML
 		$stripped_content = strip_tags($tag_content, $allow);
-		$new_content = (strlen($stripped_content) <= $chars ? $stripped_content : $this->_truncate_chars($stripped_content, $chars_start, $chars, $append));
+		$new_content = (strlen($stripped_content) <= $chars ? $stripped_content : $this->_truncate_chars($stripped_content, $chars_start, $chars, $append, $break_word));
 	} elseif (isset($words) && $words != "") {
 		// Strip the HTML
 		$stripped_content = strip_tags($tag_content, $allow);
@@ -84,9 +85,16 @@ var $return_data = "";
     }
 	
   // Helper Function - Truncate by Character Limit
-  function _truncate_chars($content, $chars_start, $limit, $append) {
+  function _truncate_chars($content, $chars_start, $limit, $append, $break_word) {
     // Removing the below to see how it effect UTF-8. 
-    $content = preg_replace('/\s+?(\S+)?$/', '', substr($content, $chars_start, ($limit+1))) . $append;
+		if(strtolower($break_word) == 'yes')
+		{
+			$content = substr($content, $chars_start, ($limit+1)) . $append;
+		}
+		else
+		{
+			$content = preg_replace('/\s+?(\S+)?$/', '', substr($content, $chars_start, ($limit+1))) . $append;	
+		}
     return $content;
   }
   
@@ -127,6 +135,7 @@ cutoff marker.
 {exp:eehive_hacksaw
 	chars = "" // Limit by number of characters
 	chars_start = "" // Used with the 'chars' parameter, this starts the excerpt at X characters from the beginning of the content
+	break_word = "" // Used with 'chars' parameter to determine whether to break the string in the middle of a word. Defaults to "yes"
     words = "" // Limit by number of words
     cutoff = "" // Limit by a specific cutoff string
     append = "" // String to append to the end of the excerpt
