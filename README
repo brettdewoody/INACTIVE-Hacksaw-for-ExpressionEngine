@@ -12,11 +12,12 @@ with the exp:eehive_hacksaw tag, like this:
 There are several parameters you can use to control how
 the content is truncated. These options are:
 
-chars   = ""     // Limit by number of characters
-words   = ""     // Limit by number of words
-cutoff  = ""     // Limit by a specific cutoff string
-append  = ""     // String to append to the end of the excerpt
-allow   = ""     // HTML tags you want to allow. Ex allow="<b><a>"
+chars      = ""     // Limit by number of characters
+break_word = ""     // Break the string in the middle of a word? (Only used when limiting chars. Defaults to Yes) 
+words      = ""     // Limit by number of words
+cutoff     = ""     // Limit by a specific cutoff string
+append     = ""     // String to append to the end of the excerpt
+allow      = ""     // HTML tags you want to allow. Ex allow="<b><a>"
 
 For example, if you want to limit your excerpt to 100
 words you would do this:
@@ -61,5 +62,30 @@ You can add any string at the end of the excerpt using the
 {/exp:eehive_hacksaw}
 
 This would append "..." to the end of the excerpt.
+
+The 'break_word' parameter allows you to decide how you want the char limit
+to behave if it ends in the middle of a word. It will default to slicing the 
+string wherever the char limit falls. If you add 'break_word="no"' it will
+fall back to the closest space and cut the string there. 
+
+Example:
+
+{exp:eehive_hacksaw chars="13" append="..."}
+String of content
+{/exp:eehive_hacksaw}
+
+would be: 
+
+'String of cont...'
+
+By adding the break_word="no" the result of this: 
+
+{exp:eehive_hacksaw chars="13" append="..." break_word="no"}
+String of content
+{/exp:eehive_hacksaw}
+
+would be: 
+
+'String of...'
 
 For complete documentation go to http://www.ee-hive.com/hacksaw
