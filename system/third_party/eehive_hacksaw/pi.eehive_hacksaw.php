@@ -115,7 +115,7 @@ var $return_data = "";
 	
   //  Make sure and use output buffering
 
-  function usage()
+  public static function usage()
   {
   ob_start(); 
   ?>
