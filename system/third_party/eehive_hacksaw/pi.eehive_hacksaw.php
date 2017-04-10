@@ -4,7 +4,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 $plugin_info = array(
   'pi_name' => 'EE Hive Hacksaw',
-  'pi_version' => '1.07',
+  'pi_version' => '1.09',
   'pi_author' => 'EE Hive - Brett DeWoody',
   'pi_author_url' => 'http://www.ee-hive.com/add-ons/hacksaw',
   'pi_description' => 'Allows you to create excerpts of your entries by removing HTML tags and limited the excerpt by character count, word count or a specific marker you insert into your content.',
@@ -67,6 +67,8 @@ var $return_data = "";
                 $new_content = $stripped_content;
         }
 	
+	$new_content = $this->_restoreTags($new_content);
+	
 	// Return the new content
     $this->return_data = $new_content;
     
@@ -101,6 +103,33 @@ var $return_data = "";
     return $content;
   }
   
+  // Original PHP code by Chirp Internet: www.chirp.com.au
+  // Please acknowledge use of this code by including this header.
+  function _restoreTags($input)
+  {
+    $opened = array();
+
+    // loop through opened and closed tags in order
+    if(preg_match_all("/<(\/?[a-z]+)>?/i", $input, $matches)) {
+      foreach($matches[1] as $tag) {
+        if(preg_match("/^[a-z]+$/i", $tag, $regs)) {
+          // a tag has been opened
+          if(strtolower($regs[0]) != 'br') $opened[] = $regs[0];
+        } elseif(preg_match("/^\/([a-z]+)$/i", $tag, $regs)) {
+          // a tag has been closed
+          unset($opened[array_pop(array_keys($opened, $regs[1]))]);
+        }
+      }
+    }
+
+    // close tags that are still open
+    if($opened) {
+      $tagstoclose = array_reverse($opened);
+      foreach($tagstoclose as $tag) $input .= "</$tag>";
+    }
+
+    return $input;
+  }
 
 	// --------------------------------------------------------------------
 
